@@ -49,7 +49,7 @@ def pause(run, money, hp, weapon):
     draw_text("SHOP", font, white, 500, 200)
     while game_paused:
         draw_text("BACK", button_font, black, 900, 705)
-        draw_text("-100", font, black, 75, 300)
+        draw_text("-130", font, black, 75, 300)
         draw_text("-100", font, black, 75, 500)
         draw_text("-30", font, black, 80, 700)
         draw_text("-100", font, black, 515, 500)
@@ -83,8 +83,8 @@ def pause(run, money, hp, weapon):
                     money -= 100
                     weapon = 3
             if button6.draw():
-                if money >= 100:
-                    money -= 100
+                if money >= 130:
+                    money -= 130
                     weapon = 4
     return run, money, hp, make_defender, weapon
 
@@ -114,7 +114,7 @@ def reset_game():
 
 class Player:
     def __init__(self, x, y):
-        self.weapon = 1
+        self.weapon = 4
         img = pg.image.load("player1.png").convert_alpha()
         self.image = pg.transform.scale(img, (50, 50))
         self.img = pg.transform.scale(img, (50, 50))
@@ -401,34 +401,50 @@ while run:
         if key[pg.K_SPACE]:
             if player.weapon == 4:
                 if player.direction == (0, -1):
-                    bullet = Projectile(player.rect.x + 25, player.rect.y, (1, -1))
+                    bullet = Projectile(player.rect.x + 25, player.rect.y, (0.5, -0.5))
                     bullet_group.add(bullet)
                     bullet = Projectile(player.rect.x + 25, player.rect.y, (0, -1))
                     bullet_group.add(bullet)
-                    bullet = Projectile(player.rect.x + 25, player.rect.y, (-1, -1))
+                    bullet = Projectile(player.rect.x + 25, player.rect.y, (0.25, -0.75))
+                    bullet_group.add(bullet)
+                    bullet = Projectile(player.rect.x + 25, player.rect.y, (-0.25, -0.75))
+                    bullet_group.add(bullet)
+                    bullet = Projectile(player.rect.x + 25, player.rect.y, (-0.5, -0.5))
                     bullet_group.add(bullet)
                 elif player.direction == (0, 1):
-                    bullet = Projectile(player.rect.x + 15, player.rect.y + 50, (1, 1))
+                    bullet = Projectile(player.rect.x + 15, player.rect.y + 50, (0.5, 0.5))
                     bullet_group.add(bullet)
                     bullet = Projectile(player.rect.x + 15, player.rect.y + 50, (0, 1))
                     bullet_group.add(bullet)
-                    bullet = Projectile(player.rect.x + 15, player.rect.y + 50, (-1, 1))
+                    bullet = Projectile(player.rect.x + 15, player.rect.y + 50, (0.25, 0.75))
+                    bullet_group.add(bullet)
+                    bullet = Projectile(player.rect.x + 15, player.rect.y + 50, (-0.25, 0.75))
+                    bullet_group.add(bullet)
+                    bullet = Projectile(player.rect.x + 15, player.rect.y + 50, (-0.5, 0.5))
                     bullet_group.add(bullet)
                 elif player.direction == (-1, 0):
-                    bullet = Projectile(player.rect.x, player.rect.y + 15, (-1, 1))
+                    bullet = Projectile(player.rect.x, player.rect.y + 15, (-0.5, 0.5))
                     bullet_group.add(bullet)
                     bullet = Projectile(player.rect.x, player.rect.y + 15, (-1, 0))
                     bullet_group.add(bullet)
-                    bullet = Projectile(player.rect.x, player.rect.y + 15, (-1, -1))
+                    bullet = Projectile(player.rect.x + 15, player.rect.y, (-0.75, 0.25))
+                    bullet_group.add(bullet)
+                    bullet = Projectile(player.rect.x + 15, player.rect.y, (-0.75, -0.25))
+                    bullet_group.add(bullet)
+                    bullet = Projectile(player.rect.x, player.rect.y + 15, (-0.5, -0.5))
                     bullet_group.add(bullet)
                 else:
-                    bullet = Projectile(player.rect.x + 50, player.rect.y + 25, (1, 1))
+                    bullet = Projectile(player.rect.x + 50, player.rect.y + 25, (0.5, 0.5))
                     bullet_group.add(bullet)
                     bullet = Projectile(player.rect.x + 50, player.rect.y + 25, (1, 0))
                     bullet_group.add(bullet)
-                    bullet = Projectile(player.rect.x + 50, player.rect.y + 25, (1, -1))
+                    bullet = Projectile(player.rect.x + 50, player.rect.y + 25, (0.75, 0.25))
                     bullet_group.add(bullet)
-                shot_cooldown = 20
+                    bullet = Projectile(player.rect.x + 50, player.rect.y + 25, (0.75, -0.25))
+                    bullet_group.add(bullet)
+                    bullet = Projectile(player.rect.x + 50, player.rect.y + 25, (0.5, -0.5))
+                    bullet_group.add(bullet)
+                shot_cooldown = 40
             if player.weapon == 2 or player.weapon == 1:
                 if player.direction == (0, -1):
                     bullet = Projectile(player.rect.x + 25, player.rect.y, player.direction)
