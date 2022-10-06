@@ -41,21 +41,24 @@ def pause(run, money, hp, weapon):
     button1 = Button(880, 700, button_img)
     button2 = Button(60, 700, button_img)
     button3 = Button(500, 700, button_img)
-    button4 = Button(500, 400, button_img)
-    button5 = Button(60, 400, button_img)
+    button4 = Button(500, 500, button_img)
+    button5 = Button(60, 500, button_img)
+    button6 = Button(60, 300, button_img)
     game_paused = True
     make_defender = 0
     draw_text("SHOP", font, white, 500, 200)
     while game_paused:
         draw_text("BACK", button_font, black, 900, 705)
-        draw_text("-100", font, black, 75, 400)
+        draw_text("-100", font, black, 75, 300)
+        draw_text("-100", font, black, 75, 500)
         draw_text("-30", font, black, 80, 700)
-        draw_text("-100", font, black, 515, 400)
+        draw_text("-100", font, black, 515, 500)
         draw_text("-30", font, black, 520, 700)
-        draw_text("dual pistol", font, black, 55, 320)
+        draw_text("dual pistol", font, black, 55, 420)
         draw_text("+10 hp", font, black, 55, 620)
-        draw_text("machine gun", font, black, 495, 320)
+        draw_text("machine gun", font, black, 495, 420)
         draw_text("defender", font, black, 495, 620)
+        draw_text("shotgun", font, black, 55, 220)
         pg.display.update()
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -79,6 +82,10 @@ def pause(run, money, hp, weapon):
                 if money >= 100:
                     money -= 100
                     weapon = 3
+            if button6.draw():
+                if money >= 100:
+                    money -= 100
+                    weapon = 4
     return run, money, hp, make_defender, weapon
 
 
@@ -125,6 +132,9 @@ class Player:
         elif self.weapon == 3:
             self.image = pg.image.load("player_w3.png").convert_alpha()
             self.img = pg.image.load("player_w3.png").convert_alpha()
+        elif self.weapon == 4:
+            self.image = pg.image.load("player_w4.png").convert_alpha()
+            self.img = pg.image.load("player_w4.png").convert_alpha()
         else:
             self.image = pg.image.load("player1.png").convert_alpha()
         self.image.set_colorkey((255, 255, 255))
@@ -389,7 +399,37 @@ while run:
     key = pg.key.get_pressed()
     if shot_cooldown == 0:
         if key[pg.K_SPACE]:
-            if player.weapon != 3:
+            if player.weapon == 4:
+                if player.direction == (0, -1):
+                    bullet = Projectile(player.rect.x + 25, player.rect.y, (1, -1))
+                    bullet_group.add(bullet)
+                    bullet = Projectile(player.rect.x + 25, player.rect.y, (0, -1))
+                    bullet_group.add(bullet)
+                    bullet = Projectile(player.rect.x + 25, player.rect.y, (-1, -1))
+                    bullet_group.add(bullet)
+                elif player.direction == (0, 1):
+                    bullet = Projectile(player.rect.x + 15, player.rect.y + 50, (1, 1))
+                    bullet_group.add(bullet)
+                    bullet = Projectile(player.rect.x + 15, player.rect.y + 50, (0, 1))
+                    bullet_group.add(bullet)
+                    bullet = Projectile(player.rect.x + 15, player.rect.y + 50, (-1, 1))
+                    bullet_group.add(bullet)
+                elif player.direction == (-1, 0):
+                    bullet = Projectile(player.rect.x, player.rect.y + 15, (-1, 1))
+                    bullet_group.add(bullet)
+                    bullet = Projectile(player.rect.x, player.rect.y + 15, (-1, 0))
+                    bullet_group.add(bullet)
+                    bullet = Projectile(player.rect.x, player.rect.y + 15, (-1, -1))
+                    bullet_group.add(bullet)
+                else:
+                    bullet = Projectile(player.rect.x + 50, player.rect.y + 25, (1, 1))
+                    bullet_group.add(bullet)
+                    bullet = Projectile(player.rect.x + 50, player.rect.y + 25, (1, 0))
+                    bullet_group.add(bullet)
+                    bullet = Projectile(player.rect.x + 50, player.rect.y + 25, (1, -1))
+                    bullet_group.add(bullet)
+                shot_cooldown = 20
+            if player.weapon == 2 or player.weapon == 1:
                 if player.direction == (0, -1):
                     bullet = Projectile(player.rect.x + 25, player.rect.y, player.direction)
                 elif player.direction == (0, 1):
@@ -403,7 +443,7 @@ while run:
                     shot_cooldown = 5
                 else:
                     shot_cooldown = 13
-            else:
+            if player.weapon == 3:
                 if player.direction == (0, -1):
                     bullet = Projectile(player.rect.x, player.rect.y, player.direction)
                 elif player.direction == (0, 1):
