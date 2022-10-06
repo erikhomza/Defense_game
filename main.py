@@ -114,7 +114,7 @@ def reset_game():
 
 class Player:
     def __init__(self, x, y):
-        self.weapon = 4
+        self.weapon = 1
         img = pg.image.load("player1.png").convert_alpha()
         self.image = pg.transform.scale(img, (50, 50))
         self.img = pg.transform.scale(img, (50, 50))
