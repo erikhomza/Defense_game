@@ -246,7 +246,7 @@ class EnemyBow(pg.sprite.Sprite):
     def update(self):
         if self.shot_cooldown > 0:
             self.shot_cooldown -= 1
-        if self.rect.x - player.rect.x < 50 and player.rect.x - self.rect.x < 50:
+        if self.rect.x - player.rect.x < 50 and player.rect.x - self.rect.x < 50 and player.rect.y > self.rect.y:
             pass
         else:
             self.rect.y += self.speed
@@ -382,7 +382,7 @@ while run:
             hp -= 1
 
     for enemy_bow in enemy_bow_group:
-        if enemy_bow.rect.x - player.rect.x < 50 and player.rect.x - enemy_bow.rect.x < 50:
+        if enemy_bow.rect.x - player.rect.x < 50 and player.rect.x - enemy_bow.rect.x < 50 and player.rect.y > enemy_bow.rect.y:
             if enemy_bow.shot_cooldown == 0:
                 enemy_bullet = EnemyProjectile(enemy_bow.rect.x + 25, enemy_bow.rect.y)
                 enemy_bullet_group.add(enemy_bullet)
