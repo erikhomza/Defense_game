@@ -75,14 +75,14 @@ def pause(run, money, hp, weapon):
                     money -= 30
                     make_defender += 1
             if button4.draw():
-                if money >= 100:
+                if money >= 100 and weapon != 2:
                     money -= 100
                     weapon = 2
             if button5.draw():
-                if money >= 100:
+                if money >= 100 and weapon != 3:
                     money -= 100
                     weapon = 3
-            if button6.draw():
+            if button6.draw() and weapon != 4:
                 if money >= 130:
                     money -= 130
                     weapon = 4
