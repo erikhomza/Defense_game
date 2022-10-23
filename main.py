@@ -64,25 +64,25 @@ def pause(run, money, hp, weapon):
             if event.type == pg.QUIT:
                 game_paused = False
                 run = False
-            if button1.draw():
+            if button1.draw(button1.rect.x, button1.rect.y):
                 game_paused = False
-            if button2.draw():
+            if button2.draw(button2.rect.x, button2.rect.y):
                 if money >= 30:
                     money -= 30
                     hp += 10
-            if button3.draw():
+            if button3.draw(button3.rect.x, button3.rect.y):
                 if money >= 30:
                     money -= 30
                     make_defender += 1
-            if button4.draw():
+            if button4.draw(button4.rect.x, button4.rect.y):
                 if money >= 100 and weapon != 2:
                     money -= 100
                     weapon = 2
-            if button5.draw():
+            if button5.draw(button5.rect.x, button5.rect.y):
                 if money >= 100 and weapon != 3:
                     money -= 100
                     weapon = 3
-            if button6.draw() and weapon != 4:
+            if button6.draw(button6.rect.x, button6.rect.y) and weapon != 4:
                 if money >= 130:
                     money -= 130
                     weapon = 4
@@ -278,19 +278,28 @@ class Button:
         self.rect.y = y
         self.clicked = False
 
-    def draw(self):
+    def draw(self, x, y):
         action = False
         pos = pg.mouse.get_pos()
 
         if self.rect.collidepoint(pos):
+            img = pg.image.load("grassCenter.png").convert_alpha()
+            img = pg.transform.scale(img, (100, 50))
+            self.rect = img.get_rect()
+            self.rect.x = x
+            self.rect.y = y
+            screen.blit(img, self.rect)
             if pg.mouse.get_pressed()[0] == 1 and not self.clicked:
                 action = True
                 self.clicked = True
-
+        else:
+            self.rect = self.image.get_rect()
+            self.rect.x = x
+            self.rect.y = y
+            screen.blit(self.image, self.rect)
         if pg.mouse.get_pressed()[0] == 0:
             self.clicked = False
 
-        screen.blit(self.image, self.rect)
         return action
 
 
@@ -388,7 +397,7 @@ while run:
                 enemy_bullet_group.add(enemy_bullet)
                 enemy_bow.shot_cooldown = 50
 
-    if button.draw():
+    if button.draw(button.rect.x, button.rect.y):
         run, money, hp, make_defender, player.weapon = pause(run, money, hp, player.weapon)
 
     if make_defender > 0:
